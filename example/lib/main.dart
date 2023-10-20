@@ -36,15 +36,6 @@ class _MyAppState extends State<MyApp> {
     try {
       platformVersion = await _flutterWindowsUtilsPlugin.getPlatformVersion() ??
           'Unknown platform version';
-
-      // final devices = await FlutterWindowsUtils.getBluetoothDevices();
-      // print("devices");
-      // print(devices);
-
-      List<int> list = utf8.encode("Hello, World. It works");
-      // List<int> list = List.generate(1000, (index) => 1);
-      Uint8List bytes = Uint8List.fromList(list);
-      await FlutterWindowsUtils.writeBytes("00:02:0a:01:bd:01", 1, bytes);
     } on PlatformException {
       platformVersion = 'Failed to get platform version.';
     } catch (e) {
