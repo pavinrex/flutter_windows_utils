@@ -4,6 +4,8 @@ import 'package:flutter_windows_utils/libusb/libusb_interface.dart';
 
 import 'flutter_windows_utils_platform_interface.dart';
 
+export 'package:flutter_windows_utils/libusb/common.dart';
+
 class FlutterWindowsUtils {
   Future<String?> getPlatformVersion() {
     return FlutterWindowsUtilsPlatform.instance.getPlatformVersion();
