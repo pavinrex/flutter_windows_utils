@@ -5,6 +5,7 @@
 #include <windows.h>
 #include <ws2bth.h>
 #include <bluetoothapis.h>
+#include <rpc.h>
 
 // For getPlatformVersion; remove unless needed for your plugin implementation.
 #include <VersionHelpers.h>
@@ -20,6 +21,7 @@
 
 #pragma comment(lib, "ws2_32.lib")
 #pragma comment(lib, "Bthprops.lib")
+#pragma comment(lib, "Rpcrt4.lib")
 
 namespace flutter_windows_utils {
 
@@ -151,10 +153,17 @@ namespace flutter_windows_utils {
                 return 1;
             }
 
+            std::string uuidStr = "00001101-0000-1000-8000-00805F9B34FB"; // Replace with your UUID string
+
+            UUID uuid;
+            RPC_STATUS status = UuidFromStringA((RPC_CSTR)uuidStr.c_str(), &uuid);
+            std::cout << "Convert status : " << status << " : " << RPC_S_OK << "\n";
+
             SOCKADDR_BTH addr = { 0 };
             addr.addressFamily = AF_BTH;
             addr.btAddr = str2ba(address.c_str());
-            addr.port = port;
+            addr.serviceClassId = uuid;
+            addr.port = BT_PORT_ANY;
 
             if (connect(s, (struct sockaddr*)&addr, sizeof(addr)) == SOCKET_ERROR) {
                 std::cerr << "Error connecting to the device" << std::endl;
