@@ -202,13 +202,13 @@ namespace flutter_windows_utils {
                 }
             }
 
-            result->Success(nullptr);
             // Close the Bluetooth socket
             closesocket(s);
 
             // Clean up Winsock
             WSACleanup();
 
+            result->Success(nullptr);
             return 0;
         }
 
